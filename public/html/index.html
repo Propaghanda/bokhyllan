@@ -12,7 +12,8 @@
 <body>
 <!--TODO: Checkout SB-Admin2 or similiar admin panel!-->
 <div>{% for item in books %}
-        {{item.title}} - {{item.author}} <a href="download/{{ item.title }} - {{ item.author }}.{{ item.location }}">Download {{ item.location }}</a><br>
+        {{item.title}} - {{item.author}} <a href="download/{{ item.title }} - {{ item.author }}.{{ item.location }}">Download {{ item.location }}</a>
+    <a<br>
     {% endfor %}</div>
 <h2>Ladda upp en bok</h2>
 <div class="panel panel-default">

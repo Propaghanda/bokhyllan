@@ -1,4 +1,5 @@
 from peewee import *
+from datetime import date
 
 
 class Upload:
@@ -33,7 +34,7 @@ class Upload:
                 f.write(data)
                 self.size += len(data)
 
-        my_book = book_db.create(title=title, author=author, location=ext)
+        my_book = book_db.create(title=title, author=author, ext=ext, ISBN='AsdasdAAS', date=date(1984, 3, 20))
         my_book.save()
 
     def info(self):

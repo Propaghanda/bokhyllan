@@ -21,7 +21,7 @@ class Book(Model):
         database = db
 
 book_db = Book()
-remove = Remove(book_db)
+remove = Remove()
 #TODO: Split up files, use REST API for downloading, uploading
 
 
@@ -45,8 +45,8 @@ class HelloWorld(object):
         return upload.info()
 
     @cherrypy.expose()
-    def remove(self):
-        return remove.fun_test()
+    def remove(self, id):
+        return remove.book(book_db, id)
 
 if __name__ == '__main__':
     cherrypy.quickstart(HelloWorld(), '/', 'conf/app.conf')

@@ -17,5 +17,6 @@ class Book(Model):
 db.connect()
 
 #db.create_table(Book)
-test = Book(title='TestTitle', author='TestAuthor', date=date(1984, 1, 14), ISBN='T1233-234', ext='epub')
-test.save()
+#test = Book(title='asda', author='dfgdf', date=date(1923, 1, 14), ISBN='ASDGFA-234', ext='epub')
+#test.save()
+test = Book.get(Book.id == 2)
