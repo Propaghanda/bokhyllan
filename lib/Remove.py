@@ -3,19 +3,25 @@ import os
 
 
 class Remove:
-    test = ""
+    ad = []
+    out = """<html>
+            <body>
+                myFile length: %s<br />
+                myFile filename: %s<br />
+            </body>
+            </html>"""
 
     def __init__(self):
         pass
 
     def book(self, book_db, book_id):
-        book = book_db.get(book_db.id == book_id)
-        del_file = book.title + " - " + book.author + "." + book.ext
-        os.remove('download/'+del_file)
-        book.delete_instance()
-        self.test = test
+        self.book_id = book_id 
+        book = book_db.get(book_db.id == 5)
+        #del_file = book.title + " - " + book.author + "." + book.ext
+        #os.remove('books/'+del_file)
+        #book.delete_instance()
 
-    def fun_test(self):
-        return self.test
+    def info(self):
+        return (str(self.book)) 
 
 

@@ -1,24 +1,16 @@
 from peewee import *
 from lib.Upload import Upload
 from lib.Remove import Remove
+from lib.Test import Test
+from lib.Database import *
 from jinja2 import Environment, FileSystemLoader
 import cherrypy
 
 cherrypy.config.update("conf/server.conf")
-db = SqliteDatabase('bok.db')
+#db = SqliteDatabase('bok.db')
 env = Environment(loader=FileSystemLoader('public/html'))
 upload = Upload()
-
-
-class Book(Model):
-    title = CharField()
-    author = CharField()
-    date = DateField()
-    ISBN = CharField()
-    ext = CharField()
-
-    class Meta:
-        database = db
+test = Test()
 
 book_db = Book()
 remove = Remove()
@@ -31,7 +23,7 @@ class HelloWorld(object):
     def index(self):
         db.connect()
         t = env.get_template('index.html')
-        books = Book.select()
+        books = book_db.select()
         return t.render(books=books)
 
     @cherrypy.expose()
@@ -45,8 +37,13 @@ class HelloWorld(object):
         return upload.info()
 
     @cherrypy.expose()
-    def remove(self, id):
-        return remove.book(book_db, id)
+    def remove(self, book_id):
+        remove.book(book_db, book_id)
+        return remove.info()
+
+    @cherrypy.expose()
+    def test(self, message):
+        return test.info(message)
 
 if __name__ == '__main__':
     cherrypy.quickstart(HelloWorld(), '/', 'conf/app.conf')
