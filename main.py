@@ -1,33 +1,28 @@
-from peewee import *
 from lib.Upload import Upload
 from lib.Remove import Remove
-from lib.Test import Test
-from lib.Database import *
+from view.Index import Index
+#from lib.Database import *
 from jinja2 import Environment, FileSystemLoader
 import cherrypy
 
 cherrypy.config.update("conf/server.conf")
-#db = SqliteDatabase('bok.db')
 env = Environment(loader=FileSystemLoader('public/html'))
 upload = Upload()
-test = Test()
+index_view = Index()
 
-book_db = Book()
+
 remove = Remove()
 #TODO: Split up files, use REST API for downloading, uploading
 
 
-class HelloWorld(object):
+class Manager(object):
 
     @cherrypy.expose()
     def index(self):
-        db.connect()
         t = env.get_template('index.html')
-        books = book_db.select()
-        return t.render(books=books)
+        return t.render()
 
     @cherrypy.expose()
-    #@cherrypy.tools.accept(media='application/x-download')
     def download(self):
         return 'You shouldn\'t be here'
 
@@ -41,9 +36,9 @@ class HelloWorld(object):
         remove.book(book_db, book_id)
         return remove.info()
 
-    @cherrypy.expose()
-    def test(self, message):
-        return test.info(message)
+    @cherrypy.expose('index.json')
+    def index_view(self, message=12):
+        return index_view.info(message)
 
 if __name__ == '__main__':
-    cherrypy.quickstart(HelloWorld(), '/', 'conf/app.conf')
+    cherrypy.quickstart(Manager(), '/', 'conf/app.conf')

@@ -1,9 +1,10 @@
-from peewee import *
 import os
-
+import sqlite3
 
 class Remove:
-    ad = []
+    db = sqlite3.connect('bok.db', check_same_thread=False)
+    db.row_factory = sqlite3.Row
+    sth = db.cursor()
     out = """<html>
             <body>
                 myFile length: %s<br />
@@ -15,13 +16,14 @@ class Remove:
         pass
 
     def book(self, book_db, book_id):
-        self.book_id = book_id 
-        book = book_db.get(book_db.id == 5)
+        self.db.connect()
+        test = book_db.get(book_db.id == 5)
         #del_file = book.title + " - " + book.author + "." + book.ext
         #os.remove('books/'+del_file)
         #book.delete_instance()
+        return test
 
     def info(self):
-        return (str(self.book)) 
+        return self.test()
 
 

@@ -10,12 +10,7 @@
     <!--<link href="static/css/vendor/bootstrap-theme.min.css" rel="stylesheet">-->
 </head>
 <body>
-<!--TODO: Checkout SB-Admin2 or similiar admin panel!-->
-<div>{% for item in books %}
-    {{item.id}}. {{item.title}} - {{item.author}} 
-    <a href="remove/{{ item.id }}">Delete</a>
-    <a href="download/{{ item.title }} - {{ item.author }}.{{ item.ext }}">Download {{ item.location }}</a><br>
-    {% endfor %}</div>
+<div id="listing"></div>
 <h2>Ladda upp en bok</h2>
 <div class="panel panel-default">
 <form action="upload" method="post" enctype="multipart/form-data" role="form">
@@ -38,5 +33,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="static/js/vendor/bootstrap.min.js"></script>
+<script src="static/js/script.js"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+#TODO remove peewee
 from peewee import *
 from datetime import date
 
@@ -20,7 +21,7 @@ class Upload:
         self.test = 'test'
 
     def book(self, book_db, my_file, title, author):
-        #self.db.connect()
+        self.db.connect()
         self.my_file = my_file
         self.title = title
         self.author =  author
