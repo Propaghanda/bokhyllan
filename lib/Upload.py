@@ -1,33 +1,23 @@
-#TODO remove peewee
-from peewee import *
-from datetime import date
+from lib.ParseEbook import ParseEbook
 
+
+epub = ParseEbook()
 
 class Upload:
-    db = SqliteDatabase('bok.db')
     size = 0
-    out = """<html>
-            <body>
-                myFile length: %s<br />
-                myFile filename: %s<br />
-                myFile mime-type: %s
-            </body>
-            </html>"""
-    author = ""
-    title = ""
-    my_file = ""
+    filename = None
+    my_file = None
 
     def __init__(self):
-        self.test = 'test'
+        pass
 
-    def book(self, book_db, my_file, title, author):
-        self.db.connect()
+    def ebook(self, my_file):
         self.my_file = my_file
-        self.title = title
-        self.author =  author
+        self.filename = my_file.filename
 
         ext = my_file.filename.split('.')[-1]
-        with open(('books/' + title + " - " + author + "." + ext), 'wb') as f:
+        # Write file in 8192 byte chunks
+        with open(('books/temp/' + self.filename), 'wb') as f:
             while True:
                 data = my_file.file.read(8192)
                 if not data:
@@ -35,8 +25,6 @@ class Upload:
                 f.write(data)
                 self.size += len(data)
 
-        my_book = book_db.create(title=title, author=author, ext=ext, ISBN='AsdasdAAS', date=date(1984, 3, 20))
-        my_book.save()
-
-    def info(self):
-        return self.out % (self.size, self.my_file.filename, self.my_file.content_type)
+    def info(self): #TODO move to view
+        return {"size": str(self.size), "filename": str(self.filename), "content_type": str(self.my_file.content_type),
+                "book": epub.get_epub('books/temp/'+self.filename)}

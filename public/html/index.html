@@ -13,23 +13,29 @@
 <div id="listing"></div>
 <h2>Ladda upp en bok</h2>
 <div class="panel panel-default">
-<form action="upload" method="post" enctype="multipart/form-data" role="form">
     <div class="form-group">
-        <label>Title</label>
-        <input class="form-control" type="text" name="title">
+        <form>
+            <label>File input</label>
+            <input id="file_upload" type="file" name="my_file">
+            <p class="help-block">Choose a ebook.</p>
+        </form>
     </div>
+    <button id="submit" class="btn btn-default">Submit</button>
+</div>
+
+<div class="panel panel-default">
     <div class="form-group">
-        <label for="exampleInputFile">Author</label>
-        <input class="form-control" type="text" name="author">
+        <form id="confirm">
+            <label>Titel</label><br>
+            <input type="text" name="title"><br>
+            <label>Författare</label><br>
+            <input type="text" name="author"><br>
+            <label>Språk</label><br>
+            <input type="text" name="language"><br>
+        </form>
     </div>
-    <div class="form-group">
-        <label>File input</label>
-        <input type="file" name="my_file">
-        <p class="help-block">Choose a ebook.</p>
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
-    </div>
+    <button id="save" class="btn btn-default">Save</button>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="static/js/vendor/bootstrap.min.js"></script>

@@ -1,6 +1,9 @@
 from lib.Upload import Upload
 from lib.Remove import Remove
-from view.Index import Index
+from lib.Edit import Edit
+
+from view.Listing import Listing
+from view.EbookInfo import EbookInfo
 #from lib.Database import *
 from jinja2 import Environment, FileSystemLoader
 import cherrypy
@@ -8,7 +11,9 @@ import cherrypy
 cherrypy.config.update("conf/server.conf")
 env = Environment(loader=FileSystemLoader('public/html'))
 upload = Upload()
-index_view = Index()
+listing_view = Listing()
+info_view = EbookInfo()
+edit = Edit()
 
 
 remove = Remove()
@@ -27,18 +32,31 @@ class Manager(object):
         return 'You shouldn\'t be here'
 
     @cherrypy.expose()
-    def upload(self, my_file, title, author):
-        upload.book(book_db, my_file, title, author)
+    @cherrypy.tools.json_out()
+    def upload(self, my_file):
+        upload.ebook(my_file)
         return upload.info()
 
     @cherrypy.expose()
     def remove(self, book_id):
-        remove.book(book_db, book_id)
+        remove.book(book_id)
         return remove.info()
 
-    @cherrypy.expose('index.json')
-    def index_view(self, message=12):
-        return index_view.info(message)
+    @cherrypy.expose('listing')
+    @cherrypy.tools.json_out()
+    def listing_view(self, message=""):
+        return listing_view.info(message)
+
+    @cherrypy.expose('ebinfo')
+    @cherrypy.tools.json_out()
+    def info_view(self, fname):
+        return info_view.epub(fname)
+
+    @cherrypy.expose()
+    @cherrypy.tools.json_out()
+    def edit(self, title="", author="", date="", ISBN="", ext="", language="", fname=""):
+        return edit.new_epub(title, author, date, ISBN, ext, language, fname)
+
 
 if __name__ == '__main__':
     cherrypy.quickstart(Manager(), '/', 'conf/app.conf')
