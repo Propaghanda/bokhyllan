@@ -19,13 +19,39 @@ function tempData(jsonObj) { //used in ajax success
     console.log(jsonObj.book.title);
 }
 
-$.getJSON( "listing", function(data){
-    $.each( data['books'], function( key, val) {
-        var file = val.author + "/" + val.title + "/" + val.author + " - " + val.title + "." + val.ext;
-        console.log(file);
-        $("#listing").append( "<p>" + val.author + " - " + val.title + " <a href='download/" + val.id + "'>Download</a></p>");
-    })
-});
+function linkText(type, id) {
+    var a = document.createElement('a');
+    a.href = type + "/" + id;
+    a.title = type;
+    a.appendChild(document.createTextNode(type));
+    return a;
+}
+
+function getListing() {
+
+    document.getElementById("listing").innerHTML = "";
+    $.getJSON( "listing", function(data){
+        $.each( data['books'], function( key, val) {
+            var file = val.author + "/" + val.title + "/" + val.author + " - " + val.title + "." + val.ext;
+            console.log(file);
+
+            var list = document.createElement("div");
+            var p = document.createElement("p");
+            var text = document.createTextNode(val.author + " - " + val.title+" ");
+
+            p.appendChild(text);
+            p.appendChild(linkText('download', val.id));
+            p.appendChild(document.createTextNode(" "));
+            p.appendChild(linkText('remove', val.id));
+            list.appendChild(p);
+            //$("#listing").append( "<a href='remove/" + val.id + "'>Remove</a>")
+            document.getElementById("listing").appendChild(list);
+        })
+    });
+
+}
+
+getListing();
 
 $("#submit").click(function() {
     var fd = new FormData();
@@ -76,5 +102,8 @@ $("#save").click(function() {
         contentType: false
     });
 
+    setTimeout(function() {
+        getListing();
+    }, 500);
 
 });

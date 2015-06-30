@@ -8,7 +8,6 @@ from view.EbookInfo import EbookInfo
 #from lib.Database import *
 from jinja2 import Environment, FileSystemLoader
 import cherrypy
-from cherrypy.lib import file_generator
 
 cherrypy.config.update("conf/server.conf")
 env = Environment(loader=FileSystemLoader('public/html'))
@@ -44,8 +43,8 @@ class Manager(object):
         return upload.info()
 
     @cherrypy.expose()
-    def remove(self, book_id):
-        remove.book(book_id)
+    def remove(self, id):
+        remove.book(id)
         return remove.info()
 
     @cherrypy.expose('listing')
