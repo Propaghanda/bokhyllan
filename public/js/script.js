@@ -23,7 +23,7 @@ $.getJSON( "listing", function(data){
     $.each( data['books'], function( key, val) {
         var file = val.author + "/" + val.title + "/" + val.author + " - " + val.title + "." + val.ext;
         console.log(file);
-        $("#listing").append( "<p>" + val.author + " - " + val.title + " <a href='download/" + file + "'>Download</a></p>");
+        $("#listing").append( "<p>" + val.author + " - " + val.title + " <a href='download/" + val.id + "'>Download</a></p>");
     })
 });
 

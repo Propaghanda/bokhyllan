@@ -18,6 +18,7 @@ class Listing:
         # add items from db to dict for json output
         for item in query:
             self.book = {
+                'id': item['id'],
                 'title': item['title'],
                 'author': item['author'],
                 'date': item['date'],

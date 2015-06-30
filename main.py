@@ -1,12 +1,14 @@
 from lib.Upload import Upload
 from lib.Remove import Remove
 from lib.Edit import Edit
+from lib.Download import Download
 
 from view.Listing import Listing
 from view.EbookInfo import EbookInfo
 #from lib.Database import *
 from jinja2 import Environment, FileSystemLoader
 import cherrypy
+from cherrypy.lib import file_generator
 
 cherrypy.config.update("conf/server.conf")
 env = Environment(loader=FileSystemLoader('public/html'))
@@ -14,6 +16,7 @@ upload = Upload()
 listing_view = Listing()
 info_view = EbookInfo()
 edit = Edit()
+download = Download()
 
 
 remove = Remove()
@@ -28,8 +31,11 @@ class Manager(object):
         return t.render()
 
     @cherrypy.expose()
-    def download(self):
-        return 'You shouldn\'t be here'
+    def download(self, id):
+        download.get_file(id)
+        cherrypy.response.headers['Content-Disposition'] = 'attachment; filename='+download.real_name
+        with open(download.path, "rb") as f:
+            return f.read()
 
     @cherrypy.expose()
     @cherrypy.tools.json_out()
