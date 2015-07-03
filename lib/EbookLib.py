@@ -5,6 +5,9 @@ from lxml import etree
 
 
 class EbookLib:
+    img = None
+    res = {}
+
     def __init__(self):
         pass
 
@@ -25,21 +28,34 @@ class EbookLib:
 
         # grab the metadata block from the contents metafile
         cf = zip.read(cfname)
+        self.res["content"] = cfname
+        cfdir = cfname.split('/')
+        if len(cfdir) > 1:
+            cdir = cfdir[0] + "/"
+        else:
+            cdir = ""
+
+        self.res["cdir"] = cdir
         tree = etree.fromstring(cf)
         p = tree.xpath('/pkg:package/pkg:metadata',namespaces=ns)[0]
 
         # repackage the data
-        res = {}
         for s in ['title', 'language', 'creator', 'date', 'identifier']:
-            res[s] = p.xpath('dc:%s/text()' % s, namespaces=ns)[0]
-        res['ext'] = fname.split('.')[-1]
+            self.res[s] = p.xpath('dc:%s/text()' % s, namespaces=ns)[0]
+
+        i = tree.xpath('/pkg:package/pkg:manifest', namespaces=ns)[0]
+        
+        self.img = cdir + i.xpath('pkg:item[starts-with(@id, "cover")]/@href', namespaces=ns)[0]
+        #test = i.xpath('item[@id="cover"]/@href', namespaces=ns)[0]
+        self.res['ext'] = fname.split('.')[-1]
+        self.res['img'] = self.img
         zip.close()
-        return res
 
     def epub_image(self, fname, path):
         zip = zipfile.ZipFile(path+"/"+fname)
+        self.epub(path+"/"+fname)
         try:
-            img = zip.read('cover.jpeg')
+            img = zip.read(self.img)
         except KeyError:
             return "No image"
 

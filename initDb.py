@@ -1,7 +1,7 @@
 from peewee import *
 from datetime import date
 
-db = SqliteDatabase('bok.db')
+db = SqliteDatabase('book.db')
 
 class Book(Model):
     title = CharField()
@@ -9,6 +9,7 @@ class Book(Model):
     date = DateField()
     ISBN = CharField()
     ext = CharField()
+    language = CharField()
 
     class Meta:
         database = db # This model uses the "people.db" database.
@@ -16,9 +17,9 @@ class Book(Model):
 
 db.connect()
 
-#db.create_table(Book)
+db.create_table(Book)
 #test = Book(title='asda', author='dfgdf', date=date(1923, 1, 14), ISBN='ASDGFA-234', ext='epub')
 #test.save()
-test = Book.get(Book.id == 1)
+#test = Book.get(Book.id == 1)
 
-print (test.title)
+#print (test.title)

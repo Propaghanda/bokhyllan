@@ -1,6 +1,5 @@
 from lib.EbookLib import EbookLib
 
-
 elib = EbookLib()
 
 class Upload:
@@ -26,5 +25,6 @@ class Upload:
                 self.size += len(data)
 
     def info(self): #TODO move to view
+        test = elib.epub('books/temp/'+self.filename)
         return {"size": str(self.size), "filename": str(self.filename), "content_type": str(self.my_file.content_type),
-                "book": elib.epub('books/temp/'+self.filename)}
+                "book": elib.res}

@@ -6,7 +6,7 @@ class Database:
     _db_cur = None
 
     def __init__(self):
-        self._db_connection = sqlite3.connect('bok.db', check_same_thread=False)
+        self._db_connection = sqlite3.connect('book.db', check_same_thread=False)
         self._db_connection.row_factory = sqlite3.Row
         self._db_cur = self._db_connection.cursor()
 

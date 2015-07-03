@@ -22,7 +22,7 @@ class Remove:
             db.query("DELETE FROM book WHERE id=:id", {"id": id}).fetchone()
             db.commit()
             self.error = "Success"
-        except WindowsError as e:
+        except FileNotFoundError as e:
             self.error = str(e)+" Deleting from db anyways"
             db.query("DELETE FROM book WHERE id=:id", {"id": id}).fetchone()
             db.commit()
