@@ -1,11 +1,11 @@
 from lib.Upload import Upload
 from lib.Remove import Remove
 from lib.Edit import Edit
-from lib.Download import Download
+from lib.Book import Book
 
 from view.Listing import Listing
 from view.EbookInfo import EbookInfo
-#from lib.Database import *
+
 from jinja2 import Environment, FileSystemLoader
 import cherrypy
 
@@ -15,7 +15,6 @@ upload = Upload()
 listing_view = Listing()
 info_view = EbookInfo()
 edit = Edit()
-download = Download()
 
 
 remove = Remove()
@@ -31,9 +30,16 @@ class Manager(object):
 
     @cherrypy.expose()
     def download(self, id):
-        download.get_file(id)
-        cherrypy.response.headers['Content-Disposition'] = 'attachment; filename='+download.real_name
-        with open(download.path, "rb") as f:
+        book = Book(id)
+        cherrypy.response.headers['Content-Disposition'] = 'attachment; filename='+book.real_name
+        with open(book.full_path, "rb") as f:
+            return f.read()
+
+    @cherrypy.expose()
+    def image(self, id):
+        book = Book(id)
+        cherrypy.response.headers['Content-Type'] = "image/png"
+        with open(book.image, "rb") as f:
             return f.read()
 
     @cherrypy.expose()

@@ -1,12 +1,14 @@
 import zipfile
+from lib.Book import Book
 from lxml import etree
 
 
-class ParseEbook:
+
+class EbookLib:
     def __init__(self):
         pass
 
-    def get_epub(self, fname):
+    def epub(self, fname):
         ns = {
             'n':'urn:oasis:names:tc:opendocument:xmlns:container',
             'pkg':'http://www.idpf.org/2007/opf',
@@ -28,8 +30,19 @@ class ParseEbook:
 
         # repackage the data
         res = {}
-        for s in ['title','language','creator','date','identifier']:
-            res[s] = p.xpath('dc:%s/text()'%(s),namespaces=ns)[0]
+        for s in ['title', 'language', 'creator', 'date', 'identifier']:
+            res[s] = p.xpath('dc:%s/text()' % s, namespaces=ns)[0]
         res['ext'] = fname.split('.')[-1]
-
+        zip.close()
         return res
+
+    def epub_image(self, fname, path):
+        zip = zipfile.ZipFile(path+"/"+fname)
+        try:
+            img = zip.read('cover.jpeg')
+        except KeyError:
+            return "No image"
+
+        with open(path+"/cover.jpeg", 'wb') as f:
+            f.write(img)
+        zip.close()

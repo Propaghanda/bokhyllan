@@ -20,10 +20,14 @@ function tempData(jsonObj) { //used in ajax success
 }
 
 function linkText(type, id) {
+    var d = document.createElement('div');
     var a = document.createElement('a');
-    a.href = type + "/" + id;
+    a.className = type;
+    a.href = type+"/"+id;
+    a.id = id;
     a.title = type;
     a.appendChild(document.createTextNode(type));
+    d.appendChild(a);
     return a;
 }
 
@@ -38,8 +42,11 @@ function getListing() {
             var list = document.createElement("div");
             var p = document.createElement("p");
             var text = document.createTextNode(val.author + " - " + val.title+" ");
+            var img = document.createElement("img");
+            img.src = 'image/'+val.id;
 
             p.appendChild(text);
+            p.appendChild(img);
             p.appendChild(linkText('download', val.id));
             p.appendChild(document.createTextNode(" "));
             p.appendChild(linkText('remove', val.id));
@@ -53,6 +60,7 @@ function getListing() {
 
 getListing();
 
+
 $("#submit").click(function() {
     var fd = new FormData();
     var uploadForm = $("#file_upload")[0].files[0];
@@ -61,7 +69,7 @@ $("#submit").click(function() {
     fd.append("my_file", uploadForm);
     //console.log(uploadForm);
     console.log(uploadForm.name);
-    // Post file to server, related files: ParseEbook.py, Upload.py
+    // Post file to server, related files: EbookLib.py, Upload.py
     $.ajax({
         url: "upload",
         type: "POST",
@@ -72,6 +80,28 @@ $("#submit").click(function() {
             jsonObj = data;
             console.log(data);
             tempData(jsonObj);
+        }
+    });
+});
+
+$('body').on('click', '.remove', function(e) {
+    e.preventDefault();
+    //alert(2);
+    var rmid = $(this).context.id;
+    console.dir(rmid);
+
+    var fd = new FormData();
+    fd.append("id", rmid);
+
+    $.ajax({
+        url: "remove",
+        type: "POST",
+        data: {id: rmid},
+        contenType: "application/json; charset=utf-8",
+        success: function() {
+            setTimeout(function() {
+                getListing();
+            }, 500);
         }
     });
 });
@@ -104,6 +134,6 @@ $("#save").click(function() {
 
     setTimeout(function() {
         getListing();
-    }, 500);
+    }, 100);
 
 });

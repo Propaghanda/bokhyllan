@@ -1,7 +1,7 @@
-from lib.ParseEbook import ParseEbook
+from lib.EbookLib import EbookLib
 
 
-epub = ParseEbook()
+elib = EbookLib()
 
 class Upload:
     size = 0
@@ -27,4 +27,4 @@ class Upload:
 
     def info(self): #TODO move to view
         return {"size": str(self.size), "filename": str(self.filename), "content_type": str(self.my_file.content_type),
-                "book": epub.get_epub('books/temp/'+self.filename)}
+                "book": elib.epub('books/temp/'+self.filename)}

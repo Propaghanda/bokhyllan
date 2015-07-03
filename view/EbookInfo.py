@@ -1,6 +1,6 @@
-from lib.ParseEbook import ParseEbook
+from lib.EbookLib import EbookLib
 
-epub = ParseEbook()
+epub = EbookLib()
 
 
 class EbookInfo:
