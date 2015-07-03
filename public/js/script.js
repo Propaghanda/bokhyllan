@@ -64,7 +64,6 @@ getListing();
 $("#submit").click(function() {
     var fd = new FormData();
     var uploadForm = $("#file_upload")[0].files[0];
-    fname = uploadForm.name;
 
     fd.append("my_file", uploadForm);
     //console.log(uploadForm);
@@ -112,6 +111,8 @@ $("#save").click(function() {
     var ISBN = bookData.identifier;
     var ext = bookData.ext;
     var date = bookData.date;
+    var imgext = bookData.imgext;
+    fname = jsonObj.filename;
 
 
     var fd = new FormData(document.querySelector("#confirm"));
@@ -119,6 +120,7 @@ $("#save").click(function() {
     fd.append("ext", ext);
     fd.append("date", date);
     fd.append("fname", fname);
+    fd.append("imgext", imgext);
 
 
     console.log(fd.title);

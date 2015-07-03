@@ -48,17 +48,18 @@ class EbookLib:
         self.img = cdir + i.xpath('pkg:item[starts-with(@id, "cover")]/@href', namespaces=ns)[0]
         #test = i.xpath('item[@id="cover"]/@href', namespaces=ns)[0]
         self.res['ext'] = fname.split('.')[-1]
+        self.res['imgext'] = self.img.split('.')[-1]
         self.res['img'] = self.img
         zip.close()
 
-    def epub_image(self, fname, path):
-        zip = zipfile.ZipFile(path+"/"+fname)
-        self.epub(path+"/"+fname)
+    def epub_image(self, tempid):
+        zip = zipfile.ZipFile("books/temp/"+tempid+".epub")
+        
         try:
             img = zip.read(self.img)
         except KeyError:
             return "No image"
 
-        with open(path+"/cover.jpeg", 'wb') as f:
+        with open("books/temp/"+tempid+"."+self.img.split('.')[-1], 'wb') as f:
             f.write(img)
         zip.close()

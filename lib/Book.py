@@ -1,5 +1,6 @@
 from lib.Database import Database
 import shutil
+import os
 
 
 class Book:
@@ -10,6 +11,7 @@ class Book:
     real_name = None
     full_path = None
     dir = None
+    image = None
 
     def __init__(self, id):
         db = Database()
@@ -20,7 +22,11 @@ class Book:
         self.ext = query['ext']
         self.real_name = self.author + " - " + self.title + "." + self.ext
         self.dir = 'books/'+self.author+"/"+self.title+"/"
-        self.image = self.dir+"cover.jpeg"
+        flist = os.listdir(self.dir)
+        for item in flist:
+            if 'cover' in item:
+                self.image = self.dir+item
+        #self.image = self.dir+"cover"
         self.full_path = self.dir+self.real_name
 
 

@@ -65,8 +65,8 @@ class Manager(object):
 
     @cherrypy.expose()
     @cherrypy.tools.json_out()
-    def edit(self, title="", author="", date="", ISBN="", ext="", language="", fname=""):
-        return edit.new_epub(title, author, date, ISBN, ext, language, fname)
+    def edit(self, title="", author="", date="", ISBN="", ext="", language="", fname="", imgext=""):
+        return edit.new_epub(title, author, date, ISBN, ext, language, fname, imgext)
 
 
 if __name__ == '__main__':
