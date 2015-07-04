@@ -20,14 +20,13 @@ function tempData(jsonObj) { //used in ajax success
 }
 
 function linkText(type, id) {
-    var d = document.createElement('div');
     var a = document.createElement('a');
-    a.className = type;
+    a.className = "btn btn-primary "+type;
+    a.role = "button";
     a.href = type+"/"+id;
     a.id = id;
     a.title = type;
     a.appendChild(document.createTextNode(type));
-    d.appendChild(a);
     return a;
 }
 
@@ -39,20 +38,31 @@ function getListing() {
             var file = val.author + "/" + val.title + "/" + val.author + " - " + val.title + "." + val.ext;
             console.log(file);
 
+            var testlist = document.createElement("div");
+            testlist.className = "col-sm-6 col-md-4";
             var list = document.createElement("div");
-            var p = document.createElement("p");
-            var text = document.createTextNode(val.author + " - " + val.title+" ");
+            list.className = "thumbnail";
+            var h3 = document.createElement("h3");
+            h3.className = "text-center";
+            var h5 = document.createElement("h5");
+            h5.className = "text-center";
+            h5.appendChild(document.createTextNode(val.author));
+            var text = document.createTextNode(val.title);
             var img = document.createElement("img");
             img.src = 'image/'+val.id;
+            img.className = "text-right";
 
-            p.appendChild(text);
-            p.appendChild(img);
-            p.appendChild(linkText('download', val.id));
-            p.appendChild(document.createTextNode(" "));
-            p.appendChild(linkText('remove', val.id));
-            list.appendChild(p);
-            //$("#listing").append( "<a href='remove/" + val.id + "'>Remove</a>")
-            document.getElementById("listing").appendChild(list);
+            var buttons = document.createElement("p");
+            buttons.appendChild(linkText('download', val.id));
+            buttons.appendChild(linkText('remove', val.id));
+
+            h3.appendChild(text);
+            list.appendChild(img);
+            list.appendChild(h3);
+            list.appendChild(h5);
+            list.appendChild(buttons);
+            testlist.appendChild(list);
+            document.getElementById("listing").appendChild(testlist);
         })
     });
 

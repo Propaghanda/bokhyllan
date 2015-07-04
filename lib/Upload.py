@@ -8,6 +8,7 @@ class Upload:
     filename = None
     my_file = None
     tempid = None
+    info = None
 
     def __init__(self):
         pass
@@ -29,8 +30,5 @@ class Upload:
 
         test = elib.epub('books/temp/'+self.filename)
         elib.epub_image(self.tempid)
-
-    def info(self): #TODO move to view
-        #test = elib.epub('books/temp/'+self.filename)
-        return {"size": str(self.size), "filename": str(self.tempid), "content_type": str(self.my_file.content_type),
+        self.info = {"size": str(self.size), "filename": str(self.tempid), "content_type": str(self.my_file.content_type),
                 "book": elib.res}

@@ -46,7 +46,7 @@ class Manager(object):
     @cherrypy.tools.json_out()
     def upload(self, my_file):
         upload.ebook(my_file)
-        return upload.info()
+        return upload.info
 
     @cherrypy.expose()
     def remove(self, id):
