@@ -27,9 +27,7 @@ class Remove:
             db.query("DELETE FROM book WHERE id=:id", {"id": id}).fetchone()
             db.commit()
 
-
-    def info(self):
-        return self.error
-
-
-
+        try:
+            os.rmdir(book.dir)
+        except:
+            pass

@@ -11,7 +11,6 @@ import cherrypy
 
 cherrypy.config.update("conf/server.conf")
 env = Environment(loader=FileSystemLoader('public/html'))
-upload = Upload()
 listing_view = Listing()
 info_view = EbookInfo()
 edit = Edit()
@@ -45,13 +44,14 @@ class Manager(object):
     @cherrypy.expose()
     @cherrypy.tools.json_out()
     def upload(self, my_file):
+        upload = Upload()
         upload.ebook(my_file)
         return upload.info
 
     @cherrypy.expose()
     def remove(self, id):
         remove.book(id)
-        return remove.info()
+        return remove.error
 
     @cherrypy.expose('listing')
     @cherrypy.tools.json_out()

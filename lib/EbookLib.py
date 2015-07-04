@@ -41,11 +41,18 @@ class EbookLib:
 
         # repackage the data
         for s in ['title', 'language', 'creator', 'date', 'identifier']:
-            self.res[s] = p.xpath('dc:%s/text()' % s, namespaces=ns)[0]
+            try:
+                self.res[s] = p.xpath('dc:%s/text()' % s, namespaces=ns)[0]
+            except IndexError:
+                self.res[s] = "undefined"
 
         i = tree.xpath('/pkg:package/pkg:manifest', namespaces=ns)[0]
         
-        self.img = cdir + i.xpath('pkg:item[starts-with(@id, "cover")]/@href', namespaces=ns)[0]
+        try:
+            self.img = cdir + i.xpath('pkg:item[starts-with(@id, "cover")]/@href', namespaces=ns)[0]
+        except IndexError:
+            self.res[s] = "undefined"
+
         #test = i.xpath('item[@id="cover"]/@href', namespaces=ns)[0]
         self.res['ext'] = fname.split('.')[-1]
         self.res['imgext'] = self.img.split('.')[-1]
