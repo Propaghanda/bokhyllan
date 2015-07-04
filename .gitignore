@@ -1,3 +1,7 @@
 .idea/
 books/
 bok.db
+book.db
+testfiles/
+.DS_Store
+*.pyc
