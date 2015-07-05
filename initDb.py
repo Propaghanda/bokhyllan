@@ -10,6 +10,7 @@ class Book(Model):
     ISBN = CharField()
     ext = CharField()
     language = CharField()
+    md5 = CharField()
 
     class Meta:
         database = db # This model uses the "people.db" database.

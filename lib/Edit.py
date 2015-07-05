@@ -18,10 +18,10 @@ class Edit:
     def new_epub(self, book_list):  # used for uploading new ebook
         db = Database()
 
-        db.query('''INSERT INTO `book` (`author`, title, `date`, ISBN, ext, language) VALUES
-                  (:author, :title, :date, :ISBN, :ext, :language)''',
+        db.query('''INSERT INTO `book` (`author`, title, `date`, ISBN, ext, language, md5) VALUES
+                  (:author, :title, :date, :ISBN, :ext, :language, :md5)''',
                  {"author": book_list["creator"], "ISBN": book_list["identifier"], "title": book_list["title"], "date": book_list["date"],
-                     "language": book_list["language"], "ext": book_list["ext"]})
+                     "language": book_list["language"], "ext": book_list["ext"], "md5": book_list["md5"]})
         self.lastid = db._db_cur.lastrowid
         db.commit()
     

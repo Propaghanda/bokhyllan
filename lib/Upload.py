@@ -3,29 +3,31 @@ from lib.Edit import Edit
 from lib.Book import Book
 from lib.Save import Save
 import random
+import hashlib
 
 class Upload:
     size = 0
     filename = None
-    my_file = None
     tempid = None
     info = None
+    md5 = None
 
     def __init__(self):
         self.info = {}
         pass
 
-    def ebook(self, my_file):
+    def ebook(self, my_file, md5):
         elib = EbookLib()
         edit = Edit()
-        self.my_file = my_file
         self.tempid = str(random.randint(1, 1000))
         ext = my_file.filename.split('.')[-1]
         self.filename = 'books/temp/'+self.tempid + "." + ext
+        self.info["content_type"] = str(my_file.content_type)
 
-        if "application/epub+zip" in str(self.my_file.content_type):
+        if "application/epub+zip" in str(my_file.content_type):
             self.write(my_file)
             elib.epub(self.filename)
+            elib.res["md5"] = md5
             edit.new_epub(elib.res)
             save = Save(self.filename, Book(edit.lastid))
             elib.epub_image(Book(edit.lastid))

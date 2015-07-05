@@ -5,6 +5,7 @@ from lib.Book import Book
 
 from view.Listing import Listing
 from view.EbookInfo import EbookInfo
+from view.UploadView import UploadView
 
 from jinja2 import Environment, FileSystemLoader
 import cherrypy
@@ -44,8 +45,8 @@ class Manager(object):
     @cherrypy.expose()
     @cherrypy.tools.json_out()
     def upload(self, my_file):
-        upload = Upload()
-        upload.ebook(my_file)
+        upload = UploadView()
+        upload.hashcheck(my_file)
         return upload.info
 
     @cherrypy.expose()

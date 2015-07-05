@@ -26,7 +26,8 @@ class Listing:
                 'ISBN': item['ISBN'],
                 'ext': item['ext'],
                 'language': item['language'],
-                'image': book.image
+                'image': book.image,
+                'md5': item["md5"]
             }
             self.books.append(self.book)
             self.json_prepared['books'] = self.books
