@@ -45,11 +45,14 @@ class EbookLib:
                 self.res[s] = p.xpath('dc:%s/text()' % s, namespaces=ns)[0]
             except IndexError:
                 self.res[s] = "undefined"
-
+        
         i = tree.xpath('/pkg:package/pkg:manifest', namespaces=ns)[0]
         try:
-            self.img = cdir + i.xpath('pkg:item[starts-with(@id, "cover")]/@href', namespaces=ns)[0]
+            testi = p.xpath('pkg:meta[@name="cover"]/@content', namespaces=ns)[0]
+            self.img = cdir + i.xpath('pkg:item[@id="'+testi+'"]/@href', namespaces=ns)[0]
         except IndexError:
+            self.img = cdir + i.xpath('pkg:item[starts-with(@id, "cover")]/@href', namespaces=ns)[0]
+        except Exception:
             self.res[s] = "undefined"
 
         #test = i.xpath('item[@id="cover"]/@href', namespaces=ns)[0]

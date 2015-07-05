@@ -1,4 +1,3 @@
-from lib.EbookLib import EbookLib
 import os
 
 class Save:
@@ -8,13 +7,10 @@ class Save:
     tempid = None
     info = None
 
-    def __init__(self, filename, bookObj):
-        elib = EbookLib()
+    def __init__(self):
+        pass
+
+    def move(self, filename, bookObj):
         if not os.path.exists(bookObj.dir):
             os.makedirs(bookObj.dir)
         os.rename(filename, bookObj.full_path)
-        elib.epub(bookObj.full_path)
-        elib.epub_image(bookObj)
-        self.info = {}
-        self.info["image"] = elib.img
-        self.info["test"] = "test"

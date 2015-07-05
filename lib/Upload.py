@@ -18,6 +18,7 @@ class Upload:
 
     def ebook(self, my_file, md5):
         elib = EbookLib()
+        save = Save()
         edit = Edit()
         self.tempid = str(random.randint(1, 1000))
         ext = my_file.filename.split('.')[-1]
@@ -29,7 +30,7 @@ class Upload:
             elib.epub(self.filename)
             elib.res["md5"] = md5
             edit.new_epub(elib.res)
-            save = Save(self.filename, Book(edit.lastid))
+            save.move(self.filename, Book(edit.lastid))
             elib.epub_image(Book(edit.lastid))
             self.info["lastid"] = edit.lastid
             self.info["book"] = elib.res
