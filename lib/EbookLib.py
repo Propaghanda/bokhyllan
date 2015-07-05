@@ -47,7 +47,6 @@ class EbookLib:
                 self.res[s] = "undefined"
 
         i = tree.xpath('/pkg:package/pkg:manifest', namespaces=ns)[0]
-        
         try:
             self.img = cdir + i.xpath('pkg:item[starts-with(@id, "cover")]/@href', namespaces=ns)[0]
         except IndexError:
@@ -59,14 +58,13 @@ class EbookLib:
         self.res['img'] = self.img
         zip.close()
 
-    def epub_image(self, tempid):
-        zip = zipfile.ZipFile("books/temp/"+tempid+".epub")
-        
+    def epub_image(self, book):
+        zip = zipfile.ZipFile(book.full_path)
         try:
             img = zip.read(self.img)
         except KeyError:
             return "No image"
 
-        with open("books/temp/"+tempid+"."+self.img.split('.')[-1], 'wb') as f:
+        with open(book.dir+"cover."+self.res['imgext'], 'wb') as f:
             f.write(img)
         zip.close()

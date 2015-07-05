@@ -22,11 +22,9 @@ class Book:
         self.ext = query['ext']
         self.real_name = self.author + " - " + self.title + "." + self.ext
         self.dir = 'books/'+self.author+"/"+self.title+"/"
-        flist = os.listdir(self.dir)
-        for item in flist:
-            if 'cover' in item:
-                self.image = self.dir+item
-        #self.image = self.dir+"cover"
+        for item in [".jpg", ".jpeg", ".png", ".gif"]:
+            if os.path.isfile(self.dir+"cover"+item):
+                self.image = self.dir+"cover"+item
         self.full_path = self.dir+self.real_name
 
 

@@ -1,5 +1,5 @@
 from lib.Database import Database
-
+from lib.Book import Book
 
 class Listing:
     book = {}
@@ -17,6 +17,7 @@ class Listing:
         query = db.query("SELECT * FROM `book`", "").fetchall()
         # add items from db to dict for json output
         for item in query:
+            book = Book(item['id'])
             self.book = {
                 'id': item['id'],
                 'title': item['title'],
@@ -24,7 +25,8 @@ class Listing:
                 'date': item['date'],
                 'ISBN': item['ISBN'],
                 'ext': item['ext'],
-                'language': item['language']
+                'language': item['language'],
+                'image': book.image
             }
             self.books.append(self.book)
             self.json_prepared['books'] = self.books

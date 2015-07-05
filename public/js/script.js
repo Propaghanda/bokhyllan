@@ -89,8 +89,13 @@ $("#submit").click(function() {
             jsonObj = data;
             console.log(data);
             tempData(jsonObj);
+            setTimeout(function() {
+                getListing();
+            }, 100);
+
         }
     });
+
 });
 
 $('body').on('click', '.remove', function(e) {
@@ -115,7 +120,7 @@ $('body').on('click', '.remove', function(e) {
     });
 });
 
-$("#save").click(function() {
+/*$("#save").click(function() {
     var bookData = jsonObj.book;
 
     var ISBN = bookData.identifier;
@@ -148,4 +153,4 @@ $("#save").click(function() {
         getListing();
     }, 100);
 
-});
+});*/
