@@ -27,8 +27,7 @@ class Scan:
                 if checksum.check(md5):
                     elib.epub(path+item)
                     elib.res["md5"] = md5
-                    edit.new_epub(elib.res)
-                    save.move(path+item, Book(edit.lastid))
+                    edit.new(path+item, elib.res)
                     elib.epub_image(Book(edit.lastid))
                     print (elib.res)
                 print (mime)

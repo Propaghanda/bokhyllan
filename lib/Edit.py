@@ -1,8 +1,8 @@
 from lib.Database import Database
-from lib.EbookLib import EbookLib
+from lib.Save import Save
+from lib.Book import Book
 import os
 
-elib = EbookLib()
 
 
 class Edit:
@@ -15,7 +15,8 @@ class Edit:
     def epub(self, id):
         return None
 
-    def new_epub(self, book_list):  # used for uploading new ebook
+    def new(self, fname,  book_list):  # used for uploading new ebook
+        save = Save()
         db = Database()
 
         db.query('''INSERT INTO `book` (`author`, title, `date`, ISBN, ext, language, md5) VALUES
@@ -24,12 +25,4 @@ class Edit:
                      "language": book_list["language"], "ext": book_list["ext"], "md5": book_list["md5"]})
         self.lastid = db._db_cur.lastrowid
         db.commit()
-    
-    def move(self, tempid, author, title, ext, imgext):
-        book_path = 'books/'+author+"/"+title
-        fname = author + " - " + title + "." + ext
-        if not os.path.exists(book_path):  # Check if path exists before moving
-            os.makedirs(book_path)
-        os.rename('books/temp/'+tempid+"."+ext, book_path+"/"+fname)
-        #os.rename('books/temp/'+tempid+"."+imgext, book_path+"/cover."+imgext)
-
+        save.move(fname, Book(self.lastid))

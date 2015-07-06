@@ -29,8 +29,7 @@ class Upload:
             self.write(my_file)
             elib.epub(self.filename)
             elib.res["md5"] = md5
-            edit.new_epub(elib.res)
-            save.move(self.filename, Book(edit.lastid))
+            edit.new(self.filename, elib.res)
             elib.epub_image(Book(edit.lastid))
             self.info["lastid"] = edit.lastid
             self.info["book"] = elib.res
