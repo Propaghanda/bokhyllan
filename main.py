@@ -2,6 +2,7 @@ from lib.Upload import Upload
 from lib.Remove import Remove
 from lib.Edit import Edit
 from lib.Book import Book
+from lib.Scan import Scan
 
 from view.Listing import Listing
 from view.EbookInfo import EbookInfo
@@ -63,6 +64,11 @@ class Manager(object):
     @cherrypy.tools.json_out()
     def info_view(self, fname):
         return info_view.epub(fname)
+
+    @cherrypy.expose()
+    def scan(self):
+        scan = Scan()
+        return scan.epub('books/scan/')
 
     @cherrypy.expose()
     @cherrypy.tools.json_out()

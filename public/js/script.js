@@ -120,6 +120,18 @@ $('body').on('click', '.remove', function(e) {
     });
 });
 
+$("#scan").click(function() {
+    $.ajax({
+        url: "scan",
+        type: "GET",
+        success: function() {
+            setTimeout(function() {
+                getListing();
+            }, 500);
+        }
+    });
+});
+
 /*$("#save").click(function() {
     var bookData = jsonObj.book;
 
