@@ -1,4 +1,5 @@
 import hashlib
+import mimetypes
 from lib.Checksum import Checksum
 from lib.Upload import Upload
 

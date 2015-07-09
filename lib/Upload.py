@@ -2,8 +2,9 @@ from lib.EbookLib import EbookLib
 from lib.Edit import Edit
 from lib.Book import Book
 from lib.Save import Save
+from lib.Mimetype import Mimetype
 import random
-import hashlib
+
 
 class Upload:
     size = 0
@@ -20,12 +21,16 @@ class Upload:
         elib = EbookLib()
         save = Save()
         edit = Edit()
+        mime = Mimetype()
         self.tempid = str(random.randint(1, 1000))
         ext = my_file.filename.split('.')[-1]
         self.filename = 'books/temp/'+self.tempid + "." + ext
         self.info["content_type"] = str(my_file.content_type)
+        m = mime.get_type(my_file.file.read())
+        self.info["ct"] = str(m)
 
-        if "application/epub+zip" in str(my_file.content_type):
+        if m == 'application/epub+zip':
+            my_file.file.seek(0)
             self.write(my_file)
             elib.epub(self.filename)
             elib.res["md5"] = md5
