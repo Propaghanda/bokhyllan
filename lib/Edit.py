@@ -25,4 +25,3 @@ class Edit:
                      "language": book_list["language"], "ext": book_list["ext"], "md5": book_list["md5"]})
         self.lastid = db._db_cur.lastrowid
         db.commit()
-        save.move(fname, Book(self.lastid))

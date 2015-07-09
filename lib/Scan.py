@@ -17,6 +17,7 @@ class Scan:
         edit = Edit()
         elib = EbookLib()
         mime = Mimetype()
+        save = Save()
         for item in os.listdir(path):
             #mime = mimetypes.guess_type(item)
             print(item)
@@ -29,6 +30,7 @@ class Scan:
                     elib.epub(path+item)
                     elib.res["md5"] = md5
                     edit.new(path+item, elib.res)
+                    save.copy(path+item, Book(edit.lastid))
                     elib.epub_image(Book(edit.lastid))
                     print (elib.res)
                     print (md5)

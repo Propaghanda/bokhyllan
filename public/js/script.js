@@ -121,9 +121,12 @@ $('body').on('click', '.remove', function(e) {
 });
 
 $("#scan").click(function() {
+    var testpath = $("#path").val()
     $.ajax({
         url: "scan",
-        type: "GET",
+        type: "POST",
+        data: {path: testpath},
+        contentType: "application/json; charset=utf-8",
         success: function() {
             setTimeout(function() {
                 getListing();
