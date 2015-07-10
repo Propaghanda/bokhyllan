@@ -25,23 +25,23 @@ class Scan:
         for item in os.listdir(path):
             #mime = mimetypes.guess_type(item)
             print(item)
-            with open(path+item, "rb") as my_file:
-                data = my_file.read()
-            m = mime.get_type(data)
-            if m == 'application/epub+zip':
-                try:
+            try: 
+                with open(path+item, "rb") as my_file:
+                    data = my_file.read()
+                m = mime.get_type(data)
+                if m == 'application/epub+zip':
                     self.info[item] = item
-                except Exception as e:
-                    self.info['error'] = e
-                md5 = hashlib.md5(data).hexdigest()
-                if checksum.check(md5):
-                    elib.epub(path+item)
-                    elib.res["md5"] = md5
-                    edit.new(path+item, elib.res)
-                    save.copy(path+item, Book(edit.lastid))
-                    elib.epub_image(Book(edit.lastid))
-                    print (elib.res)
-                    print (md5)
-                else:
-                    pass
-            print (m)
+                    md5 = hashlib.md5(data).hexdigest()
+                    if checksum.check(md5):
+                        elib.epub(path+item)
+                        elib.res["md5"] = md5
+                        edit.new(path+item, elib.res)
+                        save.copy(path+item, Book(edit.lastid))
+                        elib.epub_image(Book(edit.lastid))
+                        print (elib.res)
+                        print (md5)
+                    else:
+                        pass
+                    print (m)
+            except Exception as e:
+                info['error'] = e
