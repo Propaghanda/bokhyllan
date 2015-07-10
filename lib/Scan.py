@@ -44,4 +44,4 @@ class Scan:
                         pass
                     print (m)
             except Exception as e:
-                info['error'] = e
+                self.info['error'] = e
