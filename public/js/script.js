@@ -124,7 +124,7 @@ $("#scan").click(function() {
     var testpath = $("#path").val()
     $.ajax({
         url: "scan",
-        type: "POST",
+        type: "GET",
         data: {path: testpath},
         contentType: "application/json; charset=utf-8",
         success: function() {

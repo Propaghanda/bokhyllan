@@ -6,3 +6,4 @@ testfiles/
 .DS_Store
 *.pyc
 *.swp
+conf/

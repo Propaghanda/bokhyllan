@@ -9,15 +9,19 @@ import hashlib
 import os
 
 class Scan:
+    info = None
+
     def __init(self):
-        pass
-    
+        self.info = {}
+
     def epub(self, path):
+        self.info = {}
         checksum = Checksum()
         edit = Edit()
         elib = EbookLib()
         mime = Mimetype()
         save = Save()
+        self.info['path'] = path
         for item in os.listdir(path):
             #mime = mimetypes.guess_type(item)
             print(item)
@@ -25,6 +29,10 @@ class Scan:
                 data = my_file.read()
             m = mime.get_type(data)
             if m == 'application/epub+zip':
+                try:
+                    self.info[item] = item
+                except Exception as e:
+                    self.info['error'] = e
                 md5 = hashlib.md5(data).hexdigest()
                 if checksum.check(md5):
                     elib.epub(path+item)

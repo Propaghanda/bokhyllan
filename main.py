@@ -66,9 +66,11 @@ class Manager(object):
         return info_view.epub(fname)
 
     @cherrypy.expose()
+    @cherrypy.tools.json_out()
     def scan(self, path="books/scan/"):
         scan = Scan()
-        return scan.epub(path)
+        scan.epub(path)
+        return scan.info
 
     @cherrypy.expose()
     @cherrypy.tools.json_out()
