@@ -24,7 +24,7 @@ class Scan:
         self.info['path'] = path
         for item in os.listdir(path):
             #mime = mimetypes.guess_type(item)
-            print(item)
+            #print(item)
             try: 
                 with open(path+item, "rb") as my_file:
                     data = my_file.read()
@@ -38,11 +38,11 @@ class Scan:
                         edit.new(path+item, elib.res)
                         save.copy(path+item, Book(edit.lastid))
                         elib.epub_image(Book(edit.lastid))
-                        print (elib.res)
-                        print (md5)
+                        #print (elib.res)
+                        #print (md5)
                     else:
                         pass
-                    print (m)
+                    #print (m)
                     my_file.close()
             except Exception as e:
                 self.info[item+" error"] = str(e)
