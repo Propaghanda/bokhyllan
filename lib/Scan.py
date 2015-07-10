@@ -43,5 +43,6 @@ class Scan:
                     else:
                         pass
                     print (m)
+                    my_file.close()
             except Exception as e:
-                self.info['error'] = e
+                self.info[item+" error"] = str(e)
