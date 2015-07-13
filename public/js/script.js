@@ -49,6 +49,12 @@ function getListing() {
             
             };
 
+            var td = document.createElement('td');
+            var img = document.createElement('img');
+            img.src = "image/"+val.id;
+            td.appendChild(img);
+            tr.appendChild(td);
+
             document.getElementById('listing').appendChild(tr);
 
         })
