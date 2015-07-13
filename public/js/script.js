@@ -38,31 +38,19 @@ function getListing() {
             var file = val.author + "/" + val.title + "/" + val.author + " - " + val.title + "." + val.ext;
             console.log(file);
 
-            var testlist = document.createElement("div");
-            testlist.className = "col-sm-6 col-md-4";
-            var list = document.createElement("div");
-            list.className = "thumbnail";
-            var h3 = document.createElement("h3");
-            h3.className = "text-center";
-            var h5 = document.createElement("h5");
-            h5.className = "text-center";
-            h5.appendChild(document.createTextNode(val.author));
-            var text = document.createTextNode(val.title);
-            var img = document.createElement("img");
-            img.src = 'image/'+val.id;
-            img.className = "text-right";
+            var tr = document.createElement('tr');
 
-            var buttons = document.createElement("p");
-            buttons.appendChild(linkText('download', val.id));
-            buttons.appendChild(linkText('remove', val.id));
+            var keys = [val.id, val.author, val.title, val.language];
 
-            h3.appendChild(text);
-            list.appendChild(img);
-            list.appendChild(h3);
-            list.appendChild(h5);
-            list.appendChild(buttons);
-            testlist.appendChild(list);
-            document.getElementById("listing").appendChild(testlist);
+            for (key of keys) {
+                var td = document.createElement('td');
+                td.appendChild(document.createTextNode(key));
+                tr.appendChild(td);
+            
+            };
+
+            document.getElementById('listing').appendChild(tr);
+
         })
     });
 
