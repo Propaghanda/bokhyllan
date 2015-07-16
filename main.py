@@ -32,7 +32,7 @@ class Manager(object):
     @cherrypy.expose()
     def download(self, id):
         book = Book(id)
-        cherrypy.response.headers['Content-Disposition'] = 'attachment; filename='+book.real_name
+        cherrypy.response.headers['Content-Disposition'] = 'attachment;filename="'+book.real_name+'"'
         with open(book.full_path, "rb") as f:
             return f.read()
 
